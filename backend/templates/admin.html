@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../frontend/style.css">
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <div class="card">
+        {% if uploads %}
+            <table border="1" cellpadding="10">
+                <tr>
+                    <th>Image</th>
+                    <th>Prediction</th>
+                </tr>
+                {% for item in uploads %}
+                <tr>
+                    <td><img src="/uploads/{{ item.filename }}" width="150"></td>
+                    <td>{{ item.result }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No uploads yet.</p>
+        {% endif %}
+        <br>
+        <a href="/"><button>Upload New Image</button></a>
+    </div>
+</body>
+</html>         
