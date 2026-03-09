@@ -9,9 +9,7 @@ if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-# Store uploaded images and predictions
-uploads_data = []  # list of dicts: {'filename': ..., 'result': ...}
-
+uploads_data = []  
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -25,19 +23,16 @@ def upload():
     filepath = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
     file.save(filepath)
 
-    # Dummy prediction
     if random.random() > 0.5:
         result = "Defective Exhibit Detected"
     else:
         result = "Exhibit is OK"
 
-    # Save info for admin dashboard
     uploads_data.append({'filename': file.filename, 'result': result})
 
     image_url = "/uploads/" + file.filename
     return render_template("result.html", result=result, image_url=image_url)
 
-# Admin dashboard route
 @app.route("/admin")
 def admin_dashboard():
     return render_template("admin.html", uploads=uploads_data)
